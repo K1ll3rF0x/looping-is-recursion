@@ -28,8 +28,8 @@
   (loop [idx 0
          s a-seq]
     (cond (empty? s) nil
-      (pred (first s)) idx
-      :else (recur (inc idx) (rest s)))))
+          (pred (first s)) idx
+          :else (recur (inc idx) (rest s)))))
 
 (defn avg [a-seq]
   (loop [acc 0
@@ -50,9 +50,22 @@
                (conj acc (first s)))
              (rest s)))))
 
+;= from bottom to top
 (defn fast-fibo [n]
-  ":(")
+  (loop [a 1
+         b 0
+         idx 0]
+    (if (>= idx n)
+      b
+      (recur b (+ a b) (inc idx)))))
 
+;= TODO: Get rid of mem, and use acc also for repetition checking?
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [mem #{}
+         acc []
+         s a-seq]
+    (let [fst (first s)]
+      (if (or (mem fst) (empty? s))
+        acc
+        (recur (conj mem fst) (conj acc fst) (rest s))))))
 
